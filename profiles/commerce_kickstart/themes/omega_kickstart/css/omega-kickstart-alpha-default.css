@@ -1,0 +1,772 @@
+@import url(//fonts.googleapis.com/css?family=Open+Sans:400,700,300,600,800);
+@import url(//fonts.googleapis.com/css?family=Gentium+Basic:400,700);
+@import url(http://fonts.googleapis.com/css?family=Raleway:600,500);
+@import url(http://fonts.googleapis.com/css?family=Roboto+Slab:400,700);
+@import url(http://fonts.googleapis.com/css?family=Kaushan+Script);
+/* Include Default Variables & Mixins */
+/* End Variables & Mixins */
+/**************************************************
+* --
+* 2. Section header
+* --
+**************************************************/
+/**********************************************
+* 2.1. Zone user
+**********************************************/
+.zone-user-wrapper {
+  position: fixed;
+  z-index: 200; }
+
+/*******************************************
+* 2.1.2. Region user second
+*******************************************/
+#region-user-second {
+  background-color: transparent; }
+
+.block-views-shopping-cart-block {
+  margin: 0; }
+
+/**********************************************
+* 2.2. Zone branding
+**********************************************/
+.zone-branding .region-branding {
+  clear: both; }
+  .zone-branding .region-branding .logo-img {
+    float: left;
+    /* LTR */
+    text-align: left;
+    /* LTR */ }
+
+/**
+* Search block
+*/
+#block-views-exp-display-products-page {
+  float: right;
+  /* LTR */
+  padding-top: 0px;
+  margin-bottom: 10px; }
+
+#block-views-exp-display-products-page .views-exposed-widgets {
+  position: relative;
+  width: 300px;
+  float: none;
+  margin-right: 10px;
+  /* LTR */
+  margin-bottom: 0; }
+
+/**********************************************
+* 2.3. Zone menu
+**********************************************/
+.menu-toggle {
+  display: none; }
+
+.navigation {
+  background: transparent;
+  display: block !important;
+  margin: 26px 0;
+  padding-bottom: 0;
+  /* Main menu */
+  /* Secondary menu */ }
+  .navigation h2 {
+    display: none; }
+  .navigation .primary-menu ul,
+  .navigation .second-menu ul {
+    display: block;
+    float: left;
+    /* LTR */
+    margin: 0;
+    width: 100%; }
+    .navigation .primary-menu ul li,
+    .navigation .second-menu ul li {
+      font-size: 0.8em;
+      margin-right: -4px;
+      /* LTR */
+      width: auto; }
+      .navigation .primary-menu ul li a,
+      .navigation .second-menu ul li a {
+        display: inline;
+        border-left-width: 0;
+        border-right-width: 0; }
+        .navigation .primary-menu ul li a.active, .navigation .primary-menu ul li a:hover,
+        .navigation .second-menu ul li a.active,
+        .navigation .second-menu ul li a:hover {
+          border-left-width: 0;
+          border-right-width: 0; }
+      .navigation .primary-menu ul li.first a,
+      .navigation .second-menu ul li.first a {
+        border-left: 1px solid #cccccc;
+        /* LTR */ }
+      .navigation .primary-menu ul li.last a,
+      .navigation .second-menu ul li.last a {
+        border-right: 1px solid #cccccc;
+        /* LTR */
+        margin-right: 0;
+        /* LTR */
+        margin-left: -2px;
+        /* LTR */ }
+  .navigation .primary-menu {
+    float: left;
+    /* LTR */
+    margin-right: 12px;
+    /* LTR */
+    margin-left: 0;
+    /* LTR */ }
+  .navigation .second-menu {
+    clear: inherit;
+    float: right;
+    /* LTR */
+    margin-right: 0; }
+
+.zone-menu .block-menu h2.block-title {
+  margin-bottom: 1em; }
+.zone-menu .block-menu ul.menu li {
+  font-size: 0.8em;
+  width: auto; }
+  .zone-menu .block-menu ul.menu li a {
+    display: inline;
+    border-left-width: 0;
+    border-right-width: 0; }
+    .zone-menu .block-menu ul.menu li a.active, .zone-menu .block-menu ul.menu li a:hover {
+      border-left-width: 0;
+      border-right-width: 0; }
+  .zone-menu .block-menu ul.menu li.first a {
+    border-left: 1px solid #cccccc; }
+  .zone-menu .block-menu ul.menu li.last a {
+    border-right: 1px solid #cccccc; }
+
+/**************************************************
+* --
+* 3. Section content
+* --
+**************************************************/
+/**********************************************
+* 3.2. Zone content
+**********************************************/
+/*******************************************
+* 3.2.1. Sidebar first
+*******************************************/
+/* Price range */
+#search-api-ranges-block-slider-view-form .range-slider-box {
+  margin: 0 auto;
+  width: 90%; }
+
+#search-api-ranges-block-slider-view-form .range-box {
+  float: inherit; }
+
+#search-api-ranges-block-slider-view-form label {
+  float: left;
+  /* LTR */ }
+
+#search-api-ranges-block-slider-view-form #edit-range-from,
+#search-api-ranges-block-slider-view-form #edit-range-to {
+  float: inherit; }
+
+#search-api-ranges-block-slider-view-form #edit-submit {
+  margin-top: 0; }
+
+/*******************************************
+* 3.2.2. Content
+*******************************************/
+/**
+* Blocks
+*/
+#block-views-demo-content-slideshow-block-1 {
+  /* HP blocks: Slideshow */
+  /**
+   * For modern browsers
+   * 1. The space content is one way to avoid an Opera bug when the
+   *    contenteditable attribute is included anywhere else in the document.
+   *    Otherwise it causes space to appear at the top and bottom of elements
+   *    that are clearfixed.
+   * 2. The use of `table` rather than `block` is only necessary if using
+   *    `:before` to contain the top-margins of child elements.
+   */
+  /**
+   * For IE 6/7 only
+   * Include this rule to trigger hasLayout and contain floats.
+   */
+  *zoom: 1; }
+  #block-views-demo-content-slideshow-block-1:before, #block-views-demo-content-slideshow-block-1.cf:after {
+    content: " ";
+    /* 1 */
+    display: table;
+    /* 2 */ }
+  #block-views-demo-content-slideshow-block-1:after {
+    clear: both; }
+
+/**********************************************
+* 3.3. Zone postscript
+**********************************************/
+.zone-postscript .grid-8 {
+  margin: 0 10px;
+  width: inherit; }
+
+#zone-postscript {
+  /* Adverts blocks */ }
+  #zone-postscript .view-ad-push .views-row,
+  #zone-postscript .block-blog-block .block-inner {
+    position: relative; }
+    #zone-postscript .view-ad-push .views-row img,
+    #zone-postscript .block-blog-block .block-inner img {
+      height: auto;
+      max-width: 100%; }
+  #zone-postscript .view-ad-push .views-row .views-field-field-tagline,
+  #zone-postscript .block-blog-block .block-inner .content .views-field-title {
+    position: absolute;
+    bottom: 10%;
+    left: 7%;
+    width: 86%; }
+    #zone-postscript .view-ad-push .views-row .views-field-field-tagline a,
+    #zone-postscript .block-blog-block .block-inner .content .views-field-title a {
+      border: 0; }
+  #zone-postscript .block-blog-block .block-inner .block-title {
+    display: block; }
+  #zone-postscript .view-ad-push .views-row .views-field-field-tagline .field-content a,
+  #zone-postscript .block-blog-block .views-field-title .field-content a {
+    min-height: 60px;
+    padding: 15px 10px; }
+
+/**************************************************
+* --
+* 4. Section footer
+* --
+**************************************************/
+/**********************************************
+* 4.1. Zone footer
+**********************************************/
+/**
+* Menu footer navigation
+*/
+.section-footer ul.menu li.expanded {
+  display: inline;
+  float: left;
+  /* LTR */ }
+
+/**********************************************
+* 4.2. Zone footer2
+**********************************************/
+#block-menu-menu-payment-methods {
+  -moz-border-radius: 8px;
+  -webkit-border-radius: 8px;
+  -khtml-border-radius: 8px;
+  border-radius: 8px; }
+
+/**************************************************
+* --
+* 5. Commerce specific
+* --
+**************************************************/
+/**********************************************
+* 5.1. Search & Collection page
+**********************************************/
+/**
+* Collection page
+*/
+.view-collection-products .view-header,
+.view-collection-taxonomy-term .view-header {
+  background-size: cover; }
+  .view-collection-products .view-header .taxonomy-title,
+  .view-collection-taxonomy-term .view-header .taxonomy-title {
+    position: relative; }
+  .view-collection-products .view-header .view-collection-products,
+  .view-collection-products .view-header .collection-terms,
+  .view-collection-taxonomy-term .view-header .view-collection-products,
+  .view-collection-taxonomy-term .view-header .collection-terms {
+    float: right;
+    margin: 5px;
+    padding-top: 0; }
+
+/**********************************************
+* 5.3. Product page
+**********************************************/
+/**
+* Add to cart popin.
+*/
+.view-confirm-message-product-display {
+  clear: both;
+  float: none;
+  width: auto; }
+
+div.messages.commerce-add-to-cart-confirmation .message-inner .added-product-title {
+  float: left;
+  /* LTR */
+  width: 180px; }
+div.messages.commerce-add-to-cart-confirmation .message-inner .button-wrapper {
+  height: 100%;
+  position: absolute;
+  right: 0;
+  /* LTR */ }
+div.messages.commerce-add-to-cart-confirmation .message-inner .view-confirm-message-product-display {
+  float: left;
+  /* LTR */
+  padding-bottom: 20px; }
+  div.messages.commerce-add-to-cart-confirmation .message-inner .view-confirm-message-product-display .view-content .views-field-commerce-product .content .field-name-field-images {
+    position: relative;
+    left: 0; }
+
+/* Product details */
+.node-product-type {
+  /* Cloud zoom */ }
+  .node-product-type .cloud-zoom-container .cloud-zoom-big,
+  .node-product-type .cloud-zoom-container .mousetrap,
+  .node-product-type .cloud-zoom-container .cloud-zoom-lens {
+    display: inherit !important; }
+  .node-product-type .field-name-field-product form.commerce-add-to-cart label {
+    float: none; }
+
+.service-links {
+  width: auto; }
+
+/**********************************************
+* 5.4. Checkout process
+**********************************************/
+/**
+* Checkout page
+* Shipping page
+*/
+.page-checkout #commerce-checkout-form-checkout fieldset label,
+.page-checkout #commerce-checkout-form-review fieldset label {
+  float: left;
+  /* LTR */
+  width: 20%; }
+.page-checkout #commerce-checkout-form-checkout fieldset .commerce-customer-profile-copy label,
+.page-checkout #commerce-checkout-form-review fieldset .commerce-customer-profile-copy label {
+  float: none;
+  width: 100%; }
+
+.page-cart .entity-commerce-product .content .field-name-field-images {
+  display: inline;
+  float: left;
+  margin-right: 8px; }
+
+/**************************************************
+* --
+* 7. Blog
+* --
+**************************************************/
+.page-blog .region-content .view-content .views-row {
+  clear: left;
+  float: left;
+  width: 49%; }
+.page-blog .region-content .view-content .views-row-even {
+  clear: right;
+  float: right; }
+
+/**************************************************
+* --
+* 9. User account
+* --
+**************************************************/
+.page-user,
+.page-checkout {
+  /* Registration form */
+  /* Login form, create an account block */
+  /* User home */ }
+  .page-user #user_register_form,
+  .page-user #user_login_form,
+  .page-user .create-account,
+  .page-user #user_pass_form,
+  .page-checkout #user_register_form,
+  .page-checkout #user_login_form,
+  .page-checkout .create-account,
+  .page-checkout #user_pass_form {
+    clear: none;
+    float: left;
+    width: 45%; }
+  .page-user form#user-register-form .form-item-pass,
+  .page-user form#user-profile-form .form-item-pass,
+  .page-checkout form#user-register-form .form-item-pass,
+  .page-checkout form#user-profile-form .form-item-pass {
+    margin-bottom: auto; }
+    .page-user form#user-register-form .form-item-pass .password-parent,
+    .page-user form#user-profile-form .form-item-pass .password-parent,
+    .page-checkout form#user-register-form .form-item-pass .password-parent,
+    .page-checkout form#user-profile-form .form-item-pass .password-parent {
+      position: relative;
+      width: 36.3em; }
+      .page-user form#user-register-form .form-item-pass .password-parent .password-strength,
+      .page-user form#user-profile-form .form-item-pass .password-parent .password-strength,
+      .page-checkout form#user-register-form .form-item-pass .password-parent .password-strength,
+      .page-checkout form#user-profile-form .form-item-pass .password-parent .password-strength {
+        position: absolute;
+        right: 15px;
+        bottom: -12px;
+        width: 17em; }
+    .page-user form#user-register-form .form-item-pass .confirm-parent,
+    .page-user form#user-profile-form .form-item-pass .confirm-parent,
+    .page-checkout form#user-register-form .form-item-pass .confirm-parent,
+    .page-checkout form#user-profile-form .form-item-pass .confirm-parent {
+      position: relative;
+      width: 36.3em; }
+      .page-user form#user-register-form .form-item-pass .confirm-parent div.password-confirm,
+      .page-user form#user-profile-form .form-item-pass .confirm-parent div.password-confirm,
+      .page-checkout form#user-register-form .form-item-pass .confirm-parent div.password-confirm,
+      .page-checkout form#user-profile-form .form-item-pass .confirm-parent div.password-confirm {
+        right: 15px;
+        bottom: 8px;
+        width: 17em; }
+    .page-user form#user-register-form .form-item-pass .password-suggestions,
+    .page-user form#user-profile-form .form-item-pass .password-suggestions,
+    .page-checkout form#user-register-form .form-item-pass .password-suggestions,
+    .page-checkout form#user-profile-form .form-item-pass .password-suggestions {
+      width: 38.5em; }
+  .page-user form#user-register-form .form-actions,
+  .page-user form#user-profile-form .form-actions,
+  .page-checkout form#user-register-form .form-actions,
+  .page-checkout form#user-profile-form .form-actions {
+    clear: both;
+    margin-top: 0;
+    margin-bottom: 100px;
+    width: 70%; }
+  .page-user #user_pass_form,
+  .page-checkout #user_pass_form {
+    width: auto; }
+  .page-user form#user-login #user_login_form,
+  .page-checkout form#user-login #user_login_form {
+    border: 0;
+    border-right: 1px solid #444;
+    padding-right: 20px;
+    padding-bottom: 0; }
+  .page-user form#user-login .create-account,
+  .page-checkout form#user-login .create-account {
+    margin: 0;
+    padding: 0 20px 20px 20px; }
+  .page-user .profile ul.user-information li,
+  .page-checkout .profile ul.user-information li {
+    border-bottom: 0;
+    width: 33%; }
+
+/* Address book */
+.page-user-addressbook .view-commerce-addressbook td {
+  display: table-cell; }
+
+
+
+
+/* New Css */
+
+body {
+	font-family: 'Roboto Slab', serif;
+	background: #1b4154; /* Old browsers */
+	background: -moz-radial-gradient(center, ellipse cover,  #1b4154 1%, #07080a 99%); /* FF3.6+ */
+	background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(1%,#1b4154), color-stop(99%,#07080a)); /* Chrome,Safari4+ */
+	background: -webkit-radial-gradient(center, ellipse cover,  #1b4154 1%,#07080a 99%); /* Chrome10+,Safari5.1+ */
+	background: -o-radial-gradient(center, ellipse cover,  #1b4154 1%,#07080a 99%); /* Opera 12+ */
+	background: -ms-radial-gradient(center, ellipse cover,  #1b4154 1%,#07080a 99%); /* IE10+ */
+	background: radial-gradient(ellipse at center,  #1b4154 1%,#07080a 99%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1b4154', endColorstr='#07080a',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+
+}
+
+
+h1, h2, h3, h4, h5, h6, h7 {
+	font-family: 'Roboto Slab', serif;	
+}
+
+.zone-user-wrapper {
+	box-shadow: 0 0 6px #000000;
+	background: rgba(76, 74, 74, 0) url("/profiles/commerce_kickstart/themes/omega_kickstart/images/green-bg.png");
+}
+
+#block-system-main-menu {
+	float: right;
+	clear: right;
+}
+
+#block-system-main-menu ul li.leaf {
+	list-style-image: none;
+	list-style-type: none;
+	float: left;
+	font-size: 22px;
+	font-weight: 600;
+}
+
+
+a:link, a:visited {
+	color: #4E4E4E;
+}
+
+a:hover {
+	color: #91DA42;
+	text-shadow: 0 0 1px #C9C9C9;
+}
+
+li a.active {
+	color: #91DA42;
+	text-shadow: 0 0 1px #C9C9C9;
+}
+
+#block-block-2 {
+	float: right;
+	background: #91DA42;
+	padding: 6px 10px;
+	font-weight: 600;
+	color: #fff;
+	margin: 2px 0 0 0;
+}
+
+#block-block-1 {
+	float: left;
+	width: 65%;
+	height: auto;
+	margin: 0 2px;
+	padding: 5px 5px 0 5px;
+}
+
+#block-block-1 h2.block-title {
+	padding: 9px;
+	color: #fff;
+	margin: 0 0 5px 0;
+	background: #ECECE8 url("/profiles/commerce_kickstart/themes/omega_kickstart/images/hexellence-red.jpg") repeat;
+}
+
+.front-page-business-cards, .front-page-door-hangers, .front-page-flyers-brochure, .front-page-postcards, .front-page-posters, .front-page-banner-stands {
+	width: 185px;
+	height: 176px;
+	float: left;
+	border: 1px solid #000;
+	margin: 0 5px 5px 0;
+}
+
+
+.front-page-business-cards a, .front-page-door-hangers a, .front-page-flyers-brochure a, .front-page-postcards a, .front-page-posters a, .front-page-banner-stands a {
+	width: 165px;
+	height: 17px;
+	color: #FFFFFF;
+	font-weight: bold;
+	display: block;
+	background: #171717;
+	text-shadow: 0 0 1px #080808;
+	padding: 4px 10px 10px;
+	font-size: 15px;
+}
+
+
+
+.front-page-business-cards {
+	background: #251440 url("/profiles/commerce_kickstart/themes/omega_kickstart/images/frontpageitems/businesscards.png");
+}
+
+.front-page-door-hangers {
+	background: #ececec url("/profiles/commerce_kickstart/themes/omega_kickstart/images/frontpageitems/doorhangers.png") no-repeat;
+}
+
+.front-page-flyers-brochure {
+	background: #ececec url("/profiles/commerce_kickstart/themes/omega_kickstart/images/frontpageitems/flyersandbrochures.png") no-repeat;
+}
+
+.front-page-postcards {
+	background: #ececec url("/profiles/commerce_kickstart/themes/omega_kickstart/images/frontpageitems/postcards.png") no-repeat;
+	margin: 0 0 5px 0;
+}
+
+.front-page-posters {
+	background: #ececec url("/profiles/commerce_kickstart/themes/omega_kickstart/images/frontpageitems/posters.png") no-repeat;
+}
+
+.front-page-banner-stands {
+	background: #ececec url("/profiles/commerce_kickstart/themes/omega_kickstart/images/frontpageitems/bannerstands.png") no-repeat;
+	margin: 0 0 5px 0;
+}
+
+#block-block-6, #block-block-7 {
+	float: left;
+	height: 141px;
+	text-align: center;
+	color: #fff;
+	font-family: 'Kaushan Script', cursive;
+	border: 1px solid #111111;
+}
+
+#block-block-6 .block-inner {
+	padding: 10px;
+}
+
+#block-block-7 .block-inner {
+	padding: 22px;	
+}
+
+#block-block-6 h2, #block-block-7 h2 {
+	font-size: 33px;
+	text-shadow: 0 0 8px #000000;
+	font-family: 'Kaushan Script', cursive;
+}
+
+#block-block-6 .content, #block-block-7 .content {
+	text-align: center;	
+	font-size: 18px;
+	text-shadow: 0 0 8px #000000;
+}
+
+#block-block-6 {
+	background: #FFFFFF url("/profiles/commerce_kickstart/themes/omega_kickstart/images/weeklyspecials.png") no-repeat;
+	width: 286px;
+	float: left;
+	margin: 5px 0 0 0;
+	
+}
+
+#block-block-7 {
+	background: #FFFFFF url("/profiles/commerce_kickstart/themes/omega_kickstart/images/blog.png") no-repeat;
+	width: 286px;
+	float: left;
+	margin: 5px 0 0 0;
+}
+
+/*.front #zone-content #region-content .block {
+	width: 200px;
+	height: 200px;
+	box-shadow: 2px 2px 1px #A2A2A2;
+	display: block;
+	float: left;
+	margin: 0 0 0 10px;
+}*/
+
+
+.front .container-24 .grid-24 {
+	margin-left: 0;
+	margin-right: 0;
+}
+
+.front #zone-content .block .block-inner p a {
+	background: #2d2d2d;
+	padding: 6px;
+	margin: 0 0 0 7px;
+	box-shadow: 2px 2px 1px #1D1D1D;
+	color: #D6D6D6;
+	font-weight: 600;
+	font-size: 16px;
+}
+
+.flexslider {
+	background: none;
+	border: none;
+	box-shadow: none;
+}
+
+
+#block-menu-menu-product-menu ul li.expanded {
+	list-style-image: none;
+	list-style-type: none;
+	background: #1E1B14;
+	padding: 4px;
+	margin: 0px 0 14px 0;
+	box-shadow: 0 0 3px #000;
+	border-radius: 3px;
+}
+
+#block-menu-menu-product-menu ul li.leaf {
+	list-style-image: none;
+	list-style-type: none;
+	margin: 0;
+	padding: 1px 3px;
+	background: none;
+	border-bottom: 1px dashed #9F9F9F;
+
+}
+
+#block-menu-menu-product-menu ul li.last.leaf {
+	margin: 0;
+	border-bottom: none;
+}
+
+#block-menu-menu-product-menu .menu li span.nolink {
+	padding: 8px 15px 5px;
+	color: #FFF;
+	box-shadow: 2px 1px 3px #000000;
+	font-size: 18px;
+	font-weight: bold;
+	border-radius: 2px;
+}
+
+#block-menu-menu-product-menu .menu li.first span.nolink {
+	background: rgba(131, 239, 43, 0.71);
+}
+
+#block-menu-menu-product-menu .menu li.last span.nolink {
+	background: rgba(27, 134, 246, 0.71);	
+}
+
+#block-menu-menu-product-menu ul li.leaf a:link, #block-menu-menu-product-menu ul li.leaf a:visited {
+	margin: 0;
+	color: #fff;
+	font-weight: bold;
+	font-size: 13px;	
+}
+
+#block-views-front-page-slide-show-block ul li {
+	margin: 0;
+}
+
+#block-views-front-page-slide-show-block {
+	padding: 4px;
+	background: #2d2d2d;
+	margin: 6px 6px 0 6px;
+}
+
+.flexslider {
+	margin: 0;	
+}
+
+#block-menu-menu-product-menu ul.menu .expanded ul.menu {
+	margin: 13px 0 0 0;
+}
+
+#block-views-front-page-slide-show-block .slide-text {
+	background: #FFFFFF;
+	padding: 10px;
+	position: absolute;
+	top: 0;
+	margin: 9px;
+}
+
+#block-views-front-page-slide-show-block h2 {
+	margin: 0;	
+}
+
+#block-views-front-page-slide-show-block .flex-control-nav {
+	bottom: 0;
+	z-index: 2;
+}
+
+#zone-branding-wrapper {
+	background: rgba(76, 74, 74, 0) url("/profiles/commerce_kickstart/themes/omega_kickstart/images/header-bg.png");
+	height: 203px;
+	margin: 0 0 20px 0;	
+}
+
+#region-content {
+	background: #f4f3dc;
+	background: -moz-radial-gradient(center, ellipse cover, #f4f3dc 0%, #e5e0b9 77%, #d6d191 100%);
+	background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,#f4f3dc), color-stop(77%,#e5e0b9), color-stop(100%,#d6d191));
+	background: -webkit-radial-gradient(center, ellipse cover, #f4f3dc 0%,#e5e0b9 77%,#d6d191 100%);
+	background: -o-radial-gradient(center, ellipse cover, #f4f3dc 0%,#e5e0b9 77%,#d6d191 100%);
+	background: -ms-radial-gradient(center, ellipse cover, #f4f3dc 0%,#e5e0b9 77%,#d6d191 100%);
+	background: radial-gradient(ellipse at center, #f4f3dc 0%,#e5e0b9 77%,#d6d191 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f4f3dc', endColorstr='#d6d191',GradientType=1 );
+	box-shadow: 0 0 10px #000;
+}
+
+.front .zone-content {
+	margin-bottom: 20px;
+}
+
+#block-system-main-menu li a.active {
+	text-shadow: 0 0 1px #C9C9C9;
+	background: #91DA42;
+	padding: 3px 16px;
+	color: #fff;
+}
+
+#block-system-main-menu a:link, #block-system-main-menu a:visited {
+	color: #fff;
+}
+
+.breadcrumb {
+	border: 1px solid #0B1017;
+	color: #DEDEDE;
+	margin: 15px 0;
+	padding: 10px 27px;
+	box-shadow: inset 0 0 10px #000000;
+	background: rgba(76, 74, 74, 0) url("/profiles/commerce_kickstart/themes/omega_kickstart/images/header-bg.png");
+}
