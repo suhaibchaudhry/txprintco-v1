@@ -5,7 +5,8 @@ The Expander Plugin hides (collapses) a portion of an element's content and adds
 ## Features
 
 * works for inline and block elements (as of 1.0)
-* configurable class names and "more" and "less" text
+* optional word counting of detail text
+* configurable class names and "more", "less", and "word count" text
 * configurable expanding effect
 * callbacks for all states: on initial slicing of the content, before content expands, after content expands, after content collapses
 * manual override: if content is smaller than `slicePoint` but contains an element with the detail class, the content will be sliced just before the detail element and act the same way as elements that meet the `slicePoint` and `widow` criteria.
@@ -19,8 +20,21 @@ The following options, shown here with their default values, are currently avail
 // the number of characters at which the contents will be sliced into two parts.
 slicePoint: 100,
 
+// a string of characters at which to slice the contents into two parts,
+// but only if the string appears before slicePoint
+// Useful for slicing at the first line break, e.g. {sliceOn: '<br'}
+sliceOn: null,
+
 // whether to keep the last word of the summary whole (true) or let it slice in the middle of a word (false)
 preserveWords: true,
+
+// whether to count and display the number of words inside the collapsed text
+// This will either allow or prevent the word count 
+// (and thus the configurable wordCountText) from showing.
+showWordCount: false,
+
+// what to display around the counted number of words, set to '{{count}}' to show only the number
+wordCountText: ' ({{count}} words)',
 
 // a threshold of sorts for whether to initially hide/collapse part of the element's contents.
 // If after slicing the contents in two there are fewer words in the second part than
@@ -81,6 +95,48 @@ been able to reproduce the problem on my machine, which leads me to believe
 that certain graphics settings in Windows must also be contributing to the
 bug. In any case, if this is a concern for you, avoid using fades for those
 effects options.
+
+## Workarounds for inherent issues
+
+* It is not possible to change the text inside an element that has had expander already applied to it, because elements are already split up into detail and summary texts. Almost everything that happens during initialization in expander needs to be repeated on a change in content to properly display the altered content. To do this, expander first needs to be destroyed, then reinitialized on the content (with settings).
+  ```js
+  $('#my-element')
+  .expander('destroy')
+  .html('<p>The HTML you want to replace the current html with goes here</p>')
+  .expander(
+    showWordCount: true,
+    preserveWords: false,
+    slicePoint: 30
+  );
+  ```
+
+* As noted by a number of people (issue [#56], [#60]), this plugin can cause 
+"flickering" in its expandable elements on loading the webpage. It usually happens when multiple other scripts are present and the expander stalls during its initialization. It is (sadly) an issue that stems directly from its method of making expandable text, and cannot be fixed without changing what the plugin is, or how it operates. Nonetheless, the flicker can be prevented by the same semi-hacky fixes normally used for other FOUC (flash of unstyled content) issues:
+
+  1. Add a JS script in the head that will add a "js" class to the html element 
+  (see http://www.learningjquery.com/2008/10/1-way-to-avoid-the-flash-of-unstyled-content/). 
+  This is done by JavaScript so that the element will not be hidden for clients with their JavaScript disabled/inoperable.
+
+  2. Add the following somewhere in your CSS (using your own class names):
+    ```css
+    .js .myexpander.js-myexpander-hidden { 
+      display: none; 
+    }
+    ```
+
+  3. Add a JS script that will execute later (bottom of body or within `$(document).ready()`):
+    ```js
+    $('.myexpander').expander().removeClass('js-myexpander-hidden');
+    ```
+
+  3.5. If you still see a little "flash" of unstyled content, add this script to remove the class in an onSlice callback:
+  ```js
+  $(.myexpander).expander({
+    onSlice: function() {
+      $(this).removeClass('js-myexpander-hidden');
+    }
+  });
+  ```
 
 ## Demo
 

@@ -98,6 +98,28 @@ module('options', {
     this.ex = $('dl.options');
     this.dds = this.ex.find('dd');
     this.nowidow = $('#nowidow');
+    this.sliceonbreak = $('#sliceonbreak').expander({sliceOn: '<br'});
+    this.sliceonchar = $('#sliceonchar').expander({sliceOn: '~'});
+    this.sliceabort = $('#sliceabort').expander({sliceOn: '<br'});
+    this.slicenoabort = $('#sliceNOabort').expander({sliceOn: '~'});
+    this.wordcountesc = $('#wordcountesc').expander({showWordCount: true});
+    this.wordcountsp = $('#wordcountsp').expander({showWordCount: true});
+    this.sliceonmoreinfo = $('#sliceonmoreinfo').expander({
+      slicePoint: 500,
+      // userCollapse: false,
+      // expandEffect: 'show',
+      // expandSpeed: 0,
+      sliceOn: '<span id="more-',
+      expandText: 'More <span class="chevron-down"></span>',
+      expandPrefix: '',
+      onSlice: function() {
+        $('#sliceonmoreinfo .summary').css({display: 'block'});
+      }
+    });
+  },
+  teardown: function() {
+    this.wordcountesc.expander('destroy');
+    this.wordcountsp.expander('destroy');
   }
 });
 
@@ -179,6 +201,36 @@ asyncTest('auto collapse', function() {
 
 });
 
+test('accurate word counting', function() {
+  expect(2);
+  var countIndex = this.wordcountesc.text().search('words');
+  equal( (this.wordcountesc.text().slice(countIndex-3, countIndex+6) ), '(6 words)', 'ignores common free-standing html escapes');
+
+  countIndex = this.wordcountsp.text().search('words');
+  equal( (this.wordcountsp.text().slice(countIndex-3, countIndex+6) ), '(6 words)', 'ignores double and triple spaces, and non-word characters');
+});
+test('sliceOn', function() {
+  expect(5);
+  this.sliceonmoreinfo.find('.summary').find('.read-more').remove();
+
+  var sliceSummaryText = this.sliceonmoreinfo.find('.summary').text().replace(/\s+$/,'');
+  var expectedSummaryText = 'Welcome to my website. I am a Canadian-born multidisciplinary designer, creative director and full-stack developer based in Dallas Texas, U.S. With over 15 years of experience in visual communications and web development, I have created and maintained numerous projects for various recognizable brands in North America. For a more detailed glimpse of my work history download my resume.';
+
+  var sliceIndex = this.sliceonbreak.text().search('read');
+  equal( (this.sliceonbreak.text().slice(0, sliceIndex).length ), '57', 'find and slice before br tag');
+
+  sliceIndex = this.sliceonchar.text().search('read');
+  equal( (this.sliceonchar.text().slice(0, sliceIndex).length ), '65', 'find and slice before arbitrary \'~\'');
+
+  sliceIndex = this.sliceabort.text().search('read');
+  equal( (this.sliceabort.text().slice(0, sliceIndex).length ), '98', 'find and slice long-after br tag nested in anchor tags');
+
+  sliceIndex = $.trim( this.slicenoabort.html() || '' ).indexOf('read');
+  equal( (this.slicenoabort.text().slice(0, sliceIndex).length ), '102', 'adjust slicePoint for html tags in summaryText');
+
+  equal( sliceSummaryText, expectedSummaryText, 'adjust slicePoint for html tags in summaryText when sliceOn has html');
+});
+
 /* EVENT HANDLING */
 module('event handling', {
   setup: function() {
@@ -215,6 +267,7 @@ test('destroy expander', function() {
 module('multiple blocks', {
   setup: function() {
     this.ex = $('#hello').expander();
+    this.anchor = $('#anchor-test').expander();
   }
 });
 
@@ -231,6 +284,15 @@ test('text slicing with word boundaries', function() {
   equal(txt.length, 97, 'sliced summary text to proper length');
 });
 
+test('Read more link not nested in closing link', function() {
+
+  if ($('.read-more .more-link').length === 1) {
+    ok(false);
+  } else {
+    ok(true);
+  }
+});
+
 test('destroy expander', function() {
   expect(6);
   this.ex.expander('destroy');
@@ -241,6 +303,7 @@ test('destroy expander', function() {
   ok( (/^\s*Beatrice's Answer/).test(this.ex.text()), 'summary text preserved' );
   ok( (/Much Ado About Nothing/).test(this.ex.text()), 'detail text preserved' );
 });
+
 
 /* ODD HTML */
 module('odd html', {
@@ -254,6 +317,7 @@ module('odd html', {
 
     this.sametag = $('#sametag').expander();
     this.ampbr = $('#ampbr').expander();
+    this.htmlescape = $('#htmlescape').expander();
 
     $('#hidden-container').children('p').expander();
     this.hiddenContainer = $('#hidden-container');
@@ -262,6 +326,7 @@ module('odd html', {
     this.endinghr.expander('destroy');
     this.sametag.expander('destroy');
     this.ampbr.expander('destroy');
+    this.htmlescape.expander('destroy');
     $('#hidden-container').children('p').expander('destroy');
   }
 });
@@ -313,6 +378,10 @@ test('ampersands and line breaks', function() {
 
 // });
 
+test('split html escapes', function() {
+  expect(1);
+  equal(( this.htmlescape.text().charAt(97) !== '&'), true, 'correctly shifts stray "nbsp;" out of detailText');
+});
 
 /* PRESET ELEMENTS */
 module('Preset Elements', {
