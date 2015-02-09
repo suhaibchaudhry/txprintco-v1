@@ -1,5 +1,8 @@
 @import url(//fonts.googleapis.com/css?family=Open+Sans:400,700,300,600,800);
 @import url(//fonts.googleapis.com/css?family=Gentium+Basic:400,700);
+@import url(http://fonts.googleapis.com/css?family=Raleway:600,500);
+@import url(http://fonts.googleapis.com/css?family=Roboto+Slab:400,700);
+@import url(http://fonts.googleapis.com/css?family=Kaushan+Script);
 /* Include Default Variables & Mixins */
 /* End Variables & Mixins */
 /**************************************************
@@ -40,7 +43,7 @@
 #block-views-exp-display-products-page {
   float: right;
   /* LTR */
-  padding-top: 10px;
+  padding-top: 0px;
   margin-bottom: 10px; }
 
 #block-views-exp-display-products-page .views-exposed-widgets {
@@ -436,3 +439,334 @@ div.messages.commerce-add-to-cart-confirmation .message-inner .view-confirm-mess
 /* Address book */
 .page-user-addressbook .view-commerce-addressbook td {
   display: table-cell; }
+
+
+
+
+/* New Css */
+
+body {
+	font-family: 'Roboto Slab', serif;
+	background: #1b4154; /* Old browsers */
+	background: -moz-radial-gradient(center, ellipse cover,  #1b4154 1%, #07080a 99%); /* FF3.6+ */
+	background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(1%,#1b4154), color-stop(99%,#07080a)); /* Chrome,Safari4+ */
+	background: -webkit-radial-gradient(center, ellipse cover,  #1b4154 1%,#07080a 99%); /* Chrome10+,Safari5.1+ */
+	background: -o-radial-gradient(center, ellipse cover,  #1b4154 1%,#07080a 99%); /* Opera 12+ */
+	background: -ms-radial-gradient(center, ellipse cover,  #1b4154 1%,#07080a 99%); /* IE10+ */
+	background: radial-gradient(ellipse at center,  #1b4154 1%,#07080a 99%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1b4154', endColorstr='#07080a',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+
+}
+
+
+h1, h2, h3, h4, h5, h6, h7 {
+	font-family: 'Roboto Slab', serif;	
+}
+
+.zone-user-wrapper {
+	box-shadow: 0 0 6px #000000;
+	background: rgba(76, 74, 74, 0) url("/profiles/commerce_kickstart/themes/omega_kickstart/images/green-bg.png");
+}
+
+#block-system-main-menu {
+	float: right;
+	clear: right;
+}
+
+#block-system-main-menu ul li.leaf {
+	list-style-image: none;
+	list-style-type: none;
+	float: left;
+	font-size: 22px;
+	font-weight: 600;
+}
+
+
+a:link, a:visited {
+	color: #4E4E4E;
+}
+
+a:hover {
+	color: #91DA42;
+	text-shadow: 0 0 1px #C9C9C9;
+}
+
+li a.active {
+	color: #91DA42;
+	text-shadow: 0 0 1px #C9C9C9;
+}
+
+#block-block-2 {
+	float: right;
+	background: #91DA42;
+	padding: 6px 10px;
+	font-weight: 600;
+	color: #fff;
+	margin: 2px 0 0 0;
+}
+
+#block-block-1 {
+	float: left;
+	width: 65%;
+	height: auto;
+	margin: 0 2px;
+	padding: 5px 5px 0 5px;
+}
+
+#block-block-1 h2.block-title {
+	padding: 9px;
+	color: #fff;
+	margin: 0 0 5px 0;
+	background: #ECECE8 url("/profiles/commerce_kickstart/themes/omega_kickstart/images/hexellence-red.jpg") repeat;
+}
+
+.front-page-business-cards, .front-page-door-hangers, .front-page-flyers-brochure, .front-page-postcards, .front-page-posters, .front-page-banner-stands {
+	width: 185px;
+	height: 176px;
+	float: left;
+	border: 1px solid #000;
+	margin: 0 5px 5px 0;
+}
+
+
+.front-page-business-cards a, .front-page-door-hangers a, .front-page-flyers-brochure a, .front-page-postcards a, .front-page-posters a, .front-page-banner-stands a {
+	width: 165px;
+	height: 17px;
+	color: #FFFFFF;
+	font-weight: bold;
+	display: block;
+	background: #171717;
+	text-shadow: 0 0 1px #080808;
+	padding: 4px 10px 10px;
+	font-size: 15px;
+}
+
+
+
+.front-page-business-cards {
+	background: #251440 url("/profiles/commerce_kickstart/themes/omega_kickstart/images/frontpageitems/businesscards.png");
+}
+
+.front-page-door-hangers {
+	background: #ececec url("/profiles/commerce_kickstart/themes/omega_kickstart/images/frontpageitems/doorhangers.png") no-repeat;
+}
+
+.front-page-flyers-brochure {
+	background: #ececec url("/profiles/commerce_kickstart/themes/omega_kickstart/images/frontpageitems/flyersandbrochures.png") no-repeat;
+}
+
+.front-page-postcards {
+	background: #ececec url("/profiles/commerce_kickstart/themes/omega_kickstart/images/frontpageitems/postcards.png") no-repeat;
+	margin: 0 0 5px 0;
+}
+
+.front-page-posters {
+	background: #ececec url("/profiles/commerce_kickstart/themes/omega_kickstart/images/frontpageitems/posters.png") no-repeat;
+}
+
+.front-page-banner-stands {
+	background: #ececec url("/profiles/commerce_kickstart/themes/omega_kickstart/images/frontpageitems/bannerstands.png") no-repeat;
+	margin: 0 0 5px 0;
+}
+
+#block-block-6, #block-block-7 {
+	float: left;
+	height: 141px;
+	text-align: center;
+	color: #fff;
+	font-family: 'Kaushan Script', cursive;
+	border: 1px solid #111111;
+}
+
+#block-block-6 .block-inner {
+	padding: 10px;
+}
+
+#block-block-7 .block-inner {
+	padding: 22px;	
+}
+
+#block-block-6 h2, #block-block-7 h2 {
+	font-size: 33px;
+	text-shadow: 0 0 8px #000000;
+	font-family: 'Kaushan Script', cursive;
+}
+
+#block-block-6 .content, #block-block-7 .content {
+	text-align: center;	
+	font-size: 18px;
+	text-shadow: 0 0 8px #000000;
+}
+
+#block-block-6 {
+	background: #FFFFFF url("/profiles/commerce_kickstart/themes/omega_kickstart/images/weeklyspecials.png") no-repeat;
+	width: 286px;
+	float: left;
+	margin: 5px 0 0 0;
+	
+}
+
+#block-block-7 {
+	background: #FFFFFF url("/profiles/commerce_kickstart/themes/omega_kickstart/images/blog.png") no-repeat;
+	width: 286px;
+	float: left;
+	margin: 5px 0 0 0;
+}
+
+/*.front #zone-content #region-content .block {
+	width: 200px;
+	height: 200px;
+	box-shadow: 2px 2px 1px #A2A2A2;
+	display: block;
+	float: left;
+	margin: 0 0 0 10px;
+}*/
+
+
+.front .container-24 .grid-24 {
+	margin-left: 0;
+	margin-right: 0;
+}
+
+.front #zone-content .block .block-inner p a {
+	background: #2d2d2d;
+	padding: 6px;
+	margin: 0 0 0 7px;
+	box-shadow: 2px 2px 1px #1D1D1D;
+	color: #D6D6D6;
+	font-weight: 600;
+	font-size: 16px;
+}
+
+.flexslider {
+	background: none;
+	border: none;
+	box-shadow: none;
+}
+
+
+#block-menu-menu-product-menu ul li.expanded {
+	list-style-image: none;
+	list-style-type: none;
+	background: #1E1B14;
+	padding: 4px;
+	margin: 0px 0 14px 0;
+	box-shadow: 0 0 3px #000;
+	border-radius: 3px;
+}
+
+#block-menu-menu-product-menu ul li.leaf {
+	list-style-image: none;
+	list-style-type: none;
+	margin: 0;
+	padding: 1px 3px;
+	background: none;
+	border-bottom: 1px dashed #9F9F9F;
+
+}
+
+#block-menu-menu-product-menu ul li.last.leaf {
+	margin: 0;
+	border-bottom: none;
+}
+
+#block-menu-menu-product-menu .menu li span.nolink {
+	padding: 8px 15px 5px;
+	color: #FFF;
+	box-shadow: 2px 1px 3px #000000;
+	font-size: 18px;
+	font-weight: bold;
+	border-radius: 2px;
+}
+
+#block-menu-menu-product-menu .menu li.first span.nolink {
+	background: rgba(131, 239, 43, 0.71);
+}
+
+#block-menu-menu-product-menu .menu li.last span.nolink {
+	background: rgba(27, 134, 246, 0.71);	
+}
+
+#block-menu-menu-product-menu ul li.leaf a:link, #block-menu-menu-product-menu ul li.leaf a:visited {
+	margin: 0;
+	color: #fff;
+	font-weight: bold;
+	font-size: 13px;	
+}
+
+#block-views-front-page-slide-show-block ul li {
+	margin: 0;
+}
+
+#block-views-front-page-slide-show-block {
+	padding: 4px;
+	background: #2d2d2d;
+	margin: 6px 6px 0 6px;
+}
+
+.flexslider {
+	margin: 0;	
+}
+
+#block-menu-menu-product-menu ul.menu .expanded ul.menu {
+	margin: 13px 0 0 0;
+}
+
+#block-views-front-page-slide-show-block .slide-text {
+	background: #FFFFFF;
+	padding: 10px;
+	position: absolute;
+	top: 0;
+	margin: 9px;
+}
+
+#block-views-front-page-slide-show-block h2 {
+	margin: 0;	
+}
+
+#block-views-front-page-slide-show-block .flex-control-nav {
+	bottom: 0;
+	z-index: 2;
+}
+
+#zone-branding-wrapper {
+	background: rgba(76, 74, 74, 0) url("/profiles/commerce_kickstart/themes/omega_kickstart/images/header-bg.png");
+	height: 203px;
+	margin: 0 0 20px 0;	
+}
+
+#region-content {
+	background: #f4f3dc;
+	background: -moz-radial-gradient(center, ellipse cover, #f4f3dc 0%, #e5e0b9 77%, #d6d191 100%);
+	background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,#f4f3dc), color-stop(77%,#e5e0b9), color-stop(100%,#d6d191));
+	background: -webkit-radial-gradient(center, ellipse cover, #f4f3dc 0%,#e5e0b9 77%,#d6d191 100%);
+	background: -o-radial-gradient(center, ellipse cover, #f4f3dc 0%,#e5e0b9 77%,#d6d191 100%);
+	background: -ms-radial-gradient(center, ellipse cover, #f4f3dc 0%,#e5e0b9 77%,#d6d191 100%);
+	background: radial-gradient(ellipse at center, #f4f3dc 0%,#e5e0b9 77%,#d6d191 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f4f3dc', endColorstr='#d6d191',GradientType=1 );
+	box-shadow: 0 0 10px #000;
+}
+
+.front .zone-content {
+	margin-bottom: 20px;
+}
+
+#block-system-main-menu li a.active {
+	text-shadow: 0 0 1px #C9C9C9;
+	background: #91DA42;
+	padding: 3px 16px;
+	color: #fff;
+}
+
+#block-system-main-menu a:link, #block-system-main-menu a:visited {
+	color: #fff;
+}
+
+.breadcrumb {
+	border: 1px solid #0B1017;
+	color: #DEDEDE;
+	margin: 15px 0;
+	padding: 10px 27px;
+	box-shadow: inset 0 0 10px #000000;
+	background: rgba(76, 74, 74, 0) url("/profiles/commerce_kickstart/themes/omega_kickstart/images/header-bg.png");
+}
