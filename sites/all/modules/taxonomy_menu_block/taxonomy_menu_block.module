@@ -198,10 +198,10 @@ function taxonomy_menu_block_build($config) {
   // Set title of block. Do it now when we still have the full tree, in case of
   // a valid parent.
   if ($parent) {
-    $data['subject'] = $tree[$parent]['name'];
+    $data['subject'] = check_plain($tree[$parent]['name']);
   }
   else {
-    $data['subject'] = $taxonomy['name'];
+    $data['subject'] = check_plain($taxonomy['name']);
   }
 
   // Trim tree to one branch.
@@ -234,6 +234,16 @@ function taxonomy_menu_block_build($config) {
     }
   }
 
+  // If we have to add the number of nodes attached to each term.
+  if ($config['nodes']) {
+    $tree = taxonomy_menu_block_nodes($tree, $config);
+  }
+
+  // If we have to remove the terms with no nodes attached.
+  if ($config['hide_empty']) {
+    $tree = taxonomy_menu_block_hide_empty($tree, $config);
+  }
+
   // Depth trim. Always do this last as to not lose the active trail.
   if ($config['depth'] != '0') {
     if ($config['parent'] == 2 && $config['parent_dynamic'] == 0) {
@@ -259,16 +269,6 @@ function taxonomy_menu_block_build($config) {
     else {
       return;
     }
-  }
-
-  // If we have to add the number of nodes attached to each term.
-  if ($config['nodes']) {
-    $tree = taxonomy_menu_block_nodes($tree, $config);
-  }
-
-  // If we have to remove the terms with no nodes attached.
-  if ($config['hide_empty']) {
-    $tree = taxonomy_menu_block_hide_empty($tree, $config);
   }
 
   // Last check. If we for some reason still don't have a built tree, bail.
@@ -340,6 +340,7 @@ function taxonomy_menu_block_get_config($delta = NULL) {
     'nodes' => 0,
     'nodes_aggregation' => 0,
     'hide_empty' => 0,
+    'ctype' => array(),
   );
 
   // Get the block configuration options.
@@ -454,6 +455,11 @@ function taxonomy_menu_block_find_active_tid($tree, $vid) {
   // Check on what kind of page we are.
   $current = menu_get_item();
 
+  // Return if we have no access
+  if (!$current['access']) {
+    return $active;
+  }
+
   // If we're on a NODE page.
   if ($current['path'] == 'node/%') {
     $term_reference_fields = array();
@@ -477,11 +483,12 @@ function taxonomy_menu_block_find_active_tid($tree, $vid) {
     if (isset($term_reference_fields[$node->type])) {
       foreach ($term_reference_fields[$node->type] as $term_reference_field) {
         $term_reference_field = $node->$term_reference_field;
-        if (!empty($term_reference_field['und'])) {
-          // Only the first value will be selected, also for fields that allow
+        if (!empty($term_reference_field[LANGUAGE_NONE])) {
+          // Only the last value will be selected, also for fields that allow
           // multiple values. It doesn't make sense to have more than one
           // active trail/items in a menu.
-          $tid = $term_reference_field['und'][0]['tid'];
+          $tid = end($term_reference_field[LANGUAGE_NONE]);
+          $tid = $tid['tid'];
           // Check if the term actually belongs to the vocabulary we need to
           // display (node can have more than one term reference field).
           if (isset($tree[$tid])) {
@@ -513,7 +520,6 @@ function taxonomy_menu_block_find_active_tid($tree, $vid) {
  *  2 = active
  */
 function taxonomy_menu_block_add_active_trail($tree, $tid = NULL) {
-
   // If we have an active page, add the trail.
   if ($tid) {
     // Set current page as active.
@@ -539,7 +545,7 @@ function taxonomy_menu_block_add_active_trail($tree, $tid = NULL) {
 function taxonomy_menu_block_nodes($tree, $config) {
   // Get the node count.
   $tids = array_keys($tree);
-  $nodes = taxonomy_menu_block_get_nodes($tids, $config['vid']);
+  $nodes = taxonomy_menu_block_get_nodes($tids, $config['vid'], $config['ctype']);
 
   // Add the "normal" node count.
   foreach ($tree as $tid => $term) {
@@ -574,7 +580,7 @@ function taxonomy_menu_block_nodes($tree, $config) {
 function taxonomy_menu_block_hide_empty($tree, $config) {
   // Get the node count.
   $tids = array_keys($tree);
-  $nodes = taxonomy_menu_block_get_nodes($tids, $config['vid']);
+  $nodes = taxonomy_menu_block_get_nodes($tids, $config['vid'], $config['ctype']);
 
   // Create helper array with subsequent keys.
   $helper = array();
@@ -669,8 +675,12 @@ function taxonomy_menu_block_hide_empty($tree, $config) {
  * We try to keep this as performant as possible by doing one query for all the
  * terms in a vocabulary, which we will then cache.
  */
-function taxonomy_menu_block_get_nodes($tids, $vid) {
+function taxonomy_menu_block_get_nodes($tids, $vid, $ctype) {
   $nodes = array();
+
+  if (!empty($ctype)) {
+    $ctypestring = implode('-', $ctype);
+  }
 
   // First check if our vocabulary is set to localize. If this is the case
   // nodes in different languages will be attached to the same tid.
@@ -678,8 +688,15 @@ function taxonomy_menu_block_get_nodes($tids, $vid) {
     global $language;
     $lang = $language->language;
 
+    if (!empty($ctype)) {
+      $cache_identifier = 'taxonomy_menu_block-' . $vid . '-nodes-' . $lang . '-' . $ctypestring;
+    }
+    else {
+      $cache_identifier = 'taxonomy_menu_block-' . $vid . '-nodes-' . $lang;
+    }
+
     // First check if we have the result in cache already.
-    $cache = cache_get('taxonomy_menu_block-' . $vid . '-nodes-' . $lang);
+    $cache = cache_get($cache_identifier);
 
     if ($cache) {
       $nodes = $cache->data;
@@ -687,24 +704,38 @@ function taxonomy_menu_block_get_nodes($tids, $vid) {
     else {
       // Query for nodes attached to every term of the tree.
       // Later we'll sift out the node counts we need from this global result.
-      $nodes = db_query("
-      SELECT ti.tid, count(*)
-      FROM {taxonomy_index} ti
-      INNER JOIN {node} n
-      ON ti.nid = n.nid
-      INNER JOIN {taxonomy_term_data} ttd
-      ON ti.tid = ttd.tid
-      WHERE ttd.vid = :vid
-      AND n.language = :lang
-      GROUP BY ti.tid", array(':vid' => $vid, ':lang' => $lang));
+      $query = db_select('taxonomy_index', 'ti');
+      $query->fields('ti', array('tid'));
+      $query->join('node', 'n', 'ti.nid = n.nid');
+      $query->join('taxonomy_term_data', 'ttd', 'ti.tid = ttd.tid');
+      $query->condition('ttd.vid', $vid, '=');
+      $query->condition('n.language', $lang, '=');
+      $query->groupBy('ti.tid');
 
-      $nodes = $nodes->fetchAllKeyed();
+      if (!empty($ctype)) {
+        $or = db_or();
+        foreach ($ctype as $type) {
+          $or->condition('n.type', $type, '=');
+        }
+        $query->condition($or);
+      }
 
-      $cache = cache_set('taxonomy_menu_block-' . $vid . '-nodes-' . $lang, $nodes);
+      $query->addExpression('COUNT(ti.tid)', 'count');
+
+      $nodes = $query->execute()->fetchAllKeyed();
+
+      $cache = cache_set($cache_identifier, $nodes);
     }
   }
   else {
-    $cache = cache_get('taxonomy_menu_block-' . $vid . '-nodes');
+    if (!empty($ctype)) {
+      $cache_identifier = 'taxonomy_menu_block-' . $vid . '-nodes' . '-' . $ctypestring;
+    }
+    else {
+      $cache_identifier = 'taxonomy_menu_block-' . $vid . '-nodes';
+    }
+
+    $cache = cache_get($cache_identifier);
 
     if ($cache) {
       $nodes = $cache->data;
@@ -712,17 +743,26 @@ function taxonomy_menu_block_get_nodes($tids, $vid) {
     else {
       // Here we don't need to take language in account. Every term has its own
       // tid.
-      $nodes = db_query("
-        SELECT ti.tid, count(*)
-        FROM {taxonomy_index} ti
-        INNER JOIN {taxonomy_term_data} ttd
-        ON ti.tid = ttd.tid
-        WHERE ttd.vid = :vid
-        GROUP BY ti.tid", array(':vid' => $vid));
+      $query = db_select('taxonomy_index', 'ti');
+      $query->fields('ti', array('tid'));
+      $query->join('taxonomy_term_data', 'ttd', 'ti.tid = ttd.tid');
+      $query->condition('ttd.vid', $vid, '=');
+      $query->groupBy('ti.tid');
 
-      $nodes = $nodes->fetchAllKeyed();
+      if (!empty($ctype)) {
+        $query->join('node', 'n', 'ti.nid = n.nid');
+        $or = db_or();
+        foreach ($ctype as $type) {
+          $or->condition('n.type', $type, '=');
+        }
+        $query->condition($or);
+      }
 
-      $cache = cache_set('taxonomy_menu_block-' . $vid . '-nodes', $nodes);
+      $query->addExpression('COUNT(ti.tid)', 'count');
+
+      $nodes = $query->execute()->fetchAllKeyed();
+
+      $cache = cache_set($cache_identifier, $nodes);
     }
   }
 

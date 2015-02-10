@@ -77,18 +77,20 @@ function taxonomy_menu_block_add_block_form_submit($form, &$form_state) {
 
   // Run the normal new block submission
   // (borrowed from block_add_block_form_submit).
-  $query = db_insert('block')->fields(array(
-    'visibility',
-    'pages',
-    'custom',
-    'title',
-    'module',
-    'theme',
-    'region',
-    'status',
-    'weight',
-    'delta',
-    'cache'));
+  $query = db_insert('block')->fields(
+    array(
+      'visibility',
+      'pages',
+      'custom',
+      'title',
+      'module',
+      'theme',
+      'region',
+      'status',
+      'weight',
+      'delta',
+      'cache')
+    );
 
   foreach (list_themes() as $key => $theme) {
     if ($theme->status) {
@@ -130,22 +132,33 @@ function taxonomy_menu_block_add_block_form_submit($form, &$form_state) {
  * Save function.
  */
 function taxonomy_menu_block_save_block($delta = '', $values = array()) {
-  if (!empty($delta)) {
-    $taxonomy_menu_block = array();
-    $taxonomy_menu_block['delta'] = $delta;
-    $taxonomy_menu_block['admin_title'] = $values['admin_title'];
-    $taxonomy_menu_block['vid'] = $values['vid'];
-    $taxonomy_menu_block['parent'] = $values['parent'];
-    $taxonomy_menu_block['parent_fixed'] = $values['parent_fixed'];
-    $taxonomy_menu_block['parent_dynamic'] = $values['parent_dynamic'];
-    $taxonomy_menu_block['depth'] = $values['depth'];
-    $taxonomy_menu_block['home_link'] = $values['home_link'];
-    $taxonomy_menu_block['nodes'] = $values['nodes'];
-    $taxonomy_menu_block['nodes_aggregation'] = $values['nodes_aggregation'];
-    $taxonomy_menu_block['hide_empty'] = $values['hide_empty'];
-
-    variable_set("taxonomy_menu_block_{$delta}", $taxonomy_menu_block);
+  if (empty($delta)) {
+    return;
   }
+  
+  $ctypes = array();
+  foreach ($values['ctype'] as $key => $type) {
+    if ($type) {
+      $ctypes[] = $type;
+    }
+  }
+  
+  $taxonomy_menu_block = array(
+    'delta' => $delta,
+    'admin_title' => $values['admin_title'],
+    'vid' => $values['vid'],
+    'parent' => $values['parent'],
+    'parent_fixed' => $values['parent_fixed'],
+    'parent_dynamic' => $values['parent_dynamic'],
+    'depth' => $values['depth'],
+    'home_link' => $values['home_link'],
+    'nodes' => $values['nodes'],
+    'nodes_aggregation' => $values['nodes_aggregation'],
+    'hide_empty' => $values['hide_empty'],
+    'ctype' => $ctypes,
+  );
+
+  variable_set("taxonomy_menu_block_{$delta}", $taxonomy_menu_block);
 }
 
 /**
@@ -211,6 +224,7 @@ function _taxonomy_menu_block_form_options(&$form, &$form_state) {
   // Get default values for this block.
   $delta = $form['delta']['#value'];
   $config = taxonomy_menu_block_get_config($delta);
+  $form_state['#config'] = $config;
 
   // Override if we have already submitted our form
   // (with Ajax callback for example).
@@ -218,12 +232,15 @@ function _taxonomy_menu_block_form_options(&$form, &$form_state) {
     $config = $form_state['values'];
   }
 
-  // Build the fixed parent dropdown list.
+  // Build the fixed parent dropdown list and get the content types for which 
+  // we can possibly apply the node options.
   if ($config['vid']) {
     $parents_fixed = taxonomy_menu_block_get_parents_fixed($config['vid']);
+    $ctypes = taxonomy_menu_block_get_node_types($config['vid']);
   }
   else {
     $parents_fixed = taxonomy_menu_block_get_parents_fixed(key($vocabs));
+    $ctypes = taxonomy_menu_block_get_node_types(key($vocabs));
   }
 
   $form['settings']['wrapper-start'] = array(
@@ -244,10 +261,7 @@ function _taxonomy_menu_block_form_options(&$form, &$form_state) {
     '#default_value' => $config['vid'],
     '#options' => $vocabs,
     '#ajax' => array(
-      'event' => 'change',
-      'callback' => 'taxonomy_menu_block_ajax_parent_callback',
-      'wrapper' => 'dropdown-fixed-parent',
-      'method' => 'replace',
+      'callback' => 'taxonomy_menu_block_ajax_callback',
     ),
   );
 
@@ -311,39 +325,50 @@ function _taxonomy_menu_block_form_options(&$form, &$form_state) {
     ),
   );
 
-  $form['settings']['extras'] = array(
-    '#type' => 'fieldset',
-    '#title' => t('Extras'),
-    '#collapsible' => TRUE,
-    '#collapsed' => TRUE,
-  );
-
-  $form['settings']['extras']['home_link'] = array(
+  $form['settings']['home_link'] = array(
     '#type' => 'checkbox',
     '#title' => t('Add Home link'),
     '#description' => t('Adds a Home-link (link to frontpage) at the beginning of the menu.'),
     '#default_value' => $config['home_link'],
   );
 
-  $form['settings']['extras']['nodes'] = array(
+  $form['settings']['node_options'] = array(
+    '#type' => 'fieldset',
+    '#title' => t('Node options'),
+    '#collapsible' => TRUE,
+    '#collapsed' => TRUE,
+  );
+
+  $form['settings']['node_options']['nodes'] = array(
     '#type' => 'checkbox',
     '#title' => t('Display node count.'),
     '#description' => t('Display number of nodes attached to each term.'),
     '#default_value' => $config['nodes'],
   );
 
-  $form['settings']['extras']['nodes_aggregation'] = array(
+  $form['settings']['node_options']['nodes_aggregation'] = array(
     '#type' => 'checkbox',
     '#title' => t('Aggregate node count.'),
     '#description' => t('Add the node count of children to the node count of their <em>direct</em> parents. For this to work you need to check "Display nodes".'),
     '#default_value' => $config['nodes_aggregation'],
   );
 
-  $form['settings']['extras']['hide_empty'] = array(
+  $form['settings']['node_options']['hide_empty'] = array(
     '#type' => 'checkbox',
     '#title' => t('Hide empty.'),
     '#description' => t('Don\'t display terms with no content attached.'),
     '#default_value' => $config['hide_empty'],
+  );
+  
+  $form['settings']['node_options']['ctype'] = array(
+    '#type' => 'checkboxes',
+    '#title' => t('Content type'),
+    '#title_display' => 'before',
+    '#description' => t('Only apply node options for certain content type(s). Content types must have a term reference field to the chosen vocabulary. Leave all unchecked to select all types.'),
+    '#options' => $ctypes,
+    '#default_value' => $config['ctype'],
+    '#prefix' => '<div id="node-types">',
+    '#suffix' => '</div>',
   );
 
   $form['settings']['wrapper-close'] = array(
@@ -352,10 +377,27 @@ function _taxonomy_menu_block_form_options(&$form, &$form_state) {
 }
 
 /**
- * Ajax callback function that returns parent_fixed.
+ * Ajax callback function.
  */
-function taxonomy_menu_block_ajax_parent_callback($form, $form_state) {
-  return $form['settings']['parent_fixed'];
+function taxonomy_menu_block_ajax_callback(&$form, &$form_state) {
+  $vid = $form_state['values']['vid'];
+  $commands = array();
+  
+  // Get the correct form elements and add in new option values.
+  $parent_fixed = $form['settings']['parent_fixed'];
+  $parent_fixed['#options'] = taxonomy_menu_block_get_parents_fixed($vid);
+  $parent_fixed = form_builder($form['#id'], $parent_fixed, $form_state);
+  $commands[] = ajax_command_replace('#dropdown-fixed-parent', drupal_render($parent_fixed));
+  
+  $ctype = $form['settings']['node_options']['ctype'];
+  $ctype['#options'] = taxonomy_menu_block_get_node_types($vid);
+  $ctype = form_builder($form['#id'], $ctype, $form_state);
+  $commands[] = ajax_command_replace('#node-types', drupal_render($ctype));
+  
+  return array(
+    '#type' => 'ajax',
+    '#commands' => $commands,
+  );
 }
 
 /**
@@ -364,12 +406,15 @@ function taxonomy_menu_block_ajax_parent_callback($form, $form_state) {
  * @param int $vid
  *   Vocabulary id.
  *
- * @return array
+ * @return array $parents_fixed
  *   Array of terms of a certain vocabulary.
  */
 function taxonomy_menu_block_get_parents_fixed($vid = 0) {
-
   $parents_fixed = array();
+  
+  if (!$vid) {
+    return $parents_fixed;
+  }
 
   $terms = taxonomy_menu_block_get_taxonomy($vid);
   $terms = $terms['tree'];
@@ -382,4 +427,45 @@ function taxonomy_menu_block_get_parents_fixed($vid = 0) {
   }
 
   return $parents_fixed;
+}
+
+/**
+ * Get content types that have term references to a certain vocabulary.
+ * 
+ * @param int $vid
+ *   Vocabulary id.
+ * 
+ * @return array $options
+ *   Array of node types
+ */
+function taxonomy_menu_block_get_node_types($vid = 0) {
+  $options = array();
+  
+  if (!$vid) {
+    return $options;
+  }
+
+  $vocab = taxonomy_vocabulary_load($vid);
+  $name = $vocab->machine_name;
+  
+  // Load all defined fields.
+  $fields = field_info_fields();
+
+  // See if any are term reference fields that reference to $vid.
+  $types = array();
+  foreach ($fields as $key => $field) {
+    if ($field['type'] != 'taxonomy_term_reference' || $field['deleted'] != '0' || !isset($field['bundles']['node']) || $field['settings']['allowed_values'][0]['vocabulary'] != $name) {
+      continue;
+    }
+
+    $types = array_merge($types, $field['bundles']['node']);
+  }
+  
+  $ctypes = node_type_get_types();
+  
+  foreach ($types as $type) {
+    $options[$type] = $ctypes[$type]->name;
+  }
+  
+  return $options;
 }
